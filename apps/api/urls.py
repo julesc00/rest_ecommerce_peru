@@ -1,9 +1,9 @@
 from django.urls import path
 
-from apps.api.api import UserApiView
+from apps.api.api import user_api_view
 
 app_name = "api"
 
 urlpatterns = [
-    path("users/", UserApiView.as_view(), name="users"),
+    path("users/", user_api_view, name="users"),
 ]
