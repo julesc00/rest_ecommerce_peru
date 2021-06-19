@@ -28,7 +28,7 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    "apps.users",
+    "apps.users.apps.UsersConfig",
 ]
 
 THIRD_PARTY_APPS = [

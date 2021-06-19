@@ -7,8 +7,8 @@ from simple_history.models import HistoricalRecords
 
 class UserManager(BaseUserManager):
 
-    def _create_user(self, username, email, name, last_name, password, is_staff,
-                     is_superuser, **extra_fields):
+    def create_user(self, username, email, name, last_name, password, is_staff,
+                    is_superuser, **extra_fields):
         user = self.model(
             username=username,
             name=name,
@@ -21,8 +21,8 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self.db)
 
-    def create_user(self, username, email, name, last_name,
-                    password=None, **extra_fields):
+    def create_superuser(self, username, email, name, last_name,
+                         password=None, **extra_fields):
         return self.create_user(username, email, name, last_name,
                                 password, True, True, **extra_fields)
 
