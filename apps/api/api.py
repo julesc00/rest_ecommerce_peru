@@ -15,19 +15,20 @@ def user_api_view(request):
         user = User.objects.all()
         user_serializer = UserSerializer(user, many=True)
 
-        return Response(user_serializer.data)
+        return Response(user_serializer.data, status=status.HTTP_200_OK)
+
     elif request.method == "POST":
         user_serializer = UserSerializer(data=request.data)
         if user_serializer.is_valid():
             user_serializer.save()
 
-            return Response(user_serializer.data)
-        return Response(user_serializer.errors)
+            return Response(user_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET", "PUT", "DELETE"])
 def user_detail_api_view(request, pk=None):
-    """User detail view."""
+    """User detail view with list, update and delete."""
 
     user = User.objects.filter(id=pk).first()
 
@@ -46,7 +47,10 @@ def user_detail_api_view(request, pk=None):
 
     elif request.method == "DELETE":
         user.delete()
+
         return Response(
             {"message": "Usuario eliminado correctamente"},
             status=status.HTTP_200_OK
         )
+    return Response({"message": "No se ha encontrado un usuario con estos datos"},
+                    status=status.HTTP_400_BAD_REQUEST)
